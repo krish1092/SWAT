@@ -1,0 +1,64 @@
+.image-area {
+	padding-left : 0px;
+}
+
+@media screen and (min-width: 1170px){
+		.description-area{
+		padding: 15%;
+	}
+}
+
+@media screen and (min-width: 970px) and (max-width: 1169px){
+	.description-area{
+		padding: 10%;
+	}
+}
+
+.main-image{
+	opacity: 0.80;
+}
+.overlay-image{
+	opacity : 0.98;
+	width: 40%;
+	height: 30%;
+	position: absolute;
+}
+.images{
+	position: relative;
+}
+.images span{
+	position: absolute;
+	bottom: 0%;
+	color: white;
+}
+.bottom-image{
+	bottom: 0%;
+	right: 0%;
+}
+.top-image{
+	top: 0%;
+	left: 0%;
+}
+.description-area p{
+	text-indent: 50px;
+	font-size: 150%;
+	text-align: justify;
+}
+.counts-area{
+	text-align: center;
+	background-color: #1b2c2d;
+}
+.counts-area span{
+	color: white;
+	font-size: 140%;
+}
+.margin-adjust{
+	margin-top: 1%;
+}
+.row{
+	margin-right: 15px;
+}
+.button-margin{
+	margin-top: 1%;
+	margin-left: 1%;
+}

@@ -1,0 +1,38 @@
+
+div {
+	text-align: justify;
+}
+
+dd>p {
+	text-indent: 50px;
+}
+
+nav>ul>li {
+	padding-right: 10px;
+}
+
+@media screen and (min-width: 1170px){
+	.container{
+		width: 1500px;
+    	font-size: 18px;
+	}
+}
+.btn{
+	font-size: 18px;
+}
+h3{
+	font-weight: bold;
+}
+.team-image{
+	height: 200px; 
+	width: 200px;
+}
+.team-right-position{
+	float: right; 
+	padding-left: 10px; 
+}
+
+.team-left-position{
+	float: left; 
+	padding-right: 10px;
+}

@@ -1,0 +1,64 @@
+img {
+	height: 300px;
+	width: 400px;
+	display: block;
+	
+}
+
+span.zoom-text {
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	display: table;
+	height: 300px;
+	width: 400px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	
+}
+
+span.zoom-text span {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 200%;
+	font-family: 'Century', sans-serif;
+}
+
+.carousel-inner .item:hover img span.zoom-text {
+	opacity: 1;
+}
+
+.no-padding {
+	padding: 0;
+}
+
+.row {
+	margin-right: 0px;
+	margin-left: 0px;
+}
+.text-center{
+	text-align: center;
+}
+
+.table {
+	width: 100%;
+}
+
+th, caption {
+	text-align: center;
+}
+
+caption {
+	color: black;
+}
+.description-span{
+	text-indent: 2%;
+	font-size: 140%;
+}
+.result-area{
+	margin-bottom: 1%;
+}
+.classification-list{
+	color: green;
+}

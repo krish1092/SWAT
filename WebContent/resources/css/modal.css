@@ -1,0 +1,6 @@
+.modal-content{
+background: #3dc9bc;
+}
+.modal-header,.modal-footer{
+	background: rgba(252, 191, 9, 0.760784)
+}

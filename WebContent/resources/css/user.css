@@ -1,0 +1,19 @@
+#login,#signup{
+position:relative;
+left: 35%;
+}
+
+#forgot{
+	position: relative;
+	left: 22.5%;
+}
+
+.error{
+	color: red; font-weight: bold;
+}
+.modal-body{
+ background: #3dc9bc;
+}
+.modal-header,.modal-footer{
+	background: rgba(252, 191, 9, 0.760784);
+}

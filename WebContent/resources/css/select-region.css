@@ -1,0 +1,111 @@
+
+@media screen and (min-width: 1200px){
+	.linkimages {
+		height: 240px;
+		width: 320px;
+	}
+	
+	span.zoom-text{
+		height: 240px;
+		width: 320px;
+	}
+}
+
+@media screen and (min-width: 992px) and (max-width: 1200px){
+	.linkimages {
+		height: 210px;
+		width: 280px;
+	}
+	span.zoom-text{
+		height: 210px;
+		width: 280px;
+	}
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px){
+	.linkimages {
+		height: 120px;
+		width: 160px;
+	}
+	span.zoom-text{
+		height: 120px;
+		width: 160px;
+	}
+}
+
+
+@media screen and (max-width: 768px){
+	.linkimages {
+	height: 240px;
+	width: 320px;
+	}
+}
+
+
+.carousel-inner>.item>img {
+	padding-right: 15px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#links  div  a {
+	display: inline-block;
+	margin: 0 1em 1em 0;
+	position: relative;
+}
+
+span.zoom-text {
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	cursor: pointer;
+	display: table;
+	left: 0%;
+	top: 0%;
+	position: absolute;
+	opacity: 0;
+	-webkit-transition: opacity 500ms;
+	-moz-transition: opacity 500ms;
+	-o-transition: opacity 500ms;
+	transition: opacity 500ms;
+}
+
+span.zoom-text span {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 200%;
+	font-family: 'Century', sans-serif;
+}
+
+#links  div  a:hover span.zoom-text {
+	opacity: 1;
+}
+
+.region{
+	text-align: center;
+	font-size: 140%;
+	font-weight: bold;
+}
+
+nav > ul > li {
+padding-right : 10px;
+}
+
+div > a{
+text-align: center;
+}
+
+.padding-adjust{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.row > div > span {
+	font-size: 140%;
+	font-weight: bold;
+}
+
+#links a{
+	color: #3F51B5;
+}
