@@ -6,9 +6,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.TimeZone;
@@ -26,34 +24,49 @@ import com.meteorology.swat.model.Damages;
 import com.meteorology.swat.model.EventsCount;
 import com.meteorology.swat.model.LatLongFromUser;
 
-
-
-
-
+/**
+ * Class that handles the csv file returned by the NCDC NOAA endpoint.
+ * THe csv file contains the severe weather reports.
+ * @author Krishnan Subramanian
+ *
+ */
 public class CSVFileHandler {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CSVFileHandler.class);
 	
+	//Instantiated as multiple executions of handler() will alter the following variables.
 	private Damages damages = new Damages();
-	
 	private LinkedHashMap<String, EventsCount> eventsCountMap = new LinkedHashMap<String, EventsCount>();
 	
-	private int total = 0;
+	private int totalEventCount;
 	
-	public int getTotal(){
-		return total;
+	/**
+	 * @return The sum of hail,tornado,thunderstorm and flashflood counts.
+	 */
+	public int getTotalEventCount(){
+		return totalEventCount;
 	}
 	
-	public LinkedHashMap<String, EventsCount> getEventsCountMap() {
-	
+	/**
+	 * @return A map of classification and its severe weather event counts.
+	 */
+	public LinkedHashMap<String, EventsCount> getEventsCountMap() {	
 		return eventsCountMap;
 	}
 
+	/**
+	 * @return The total damages that were caused.
+	 */
 	public Damages getDamages() {
 		return damages;
 	}
 
-	public DataSource getDataSourceDetails() throws SQLException{
+	/**
+	 * The Database connection details. 
+	 * @return a {@link DataSource} object.
+	 * @throws SQLException When there's an error setting up the driver.
+	 */
+	private DataSource getDataSourceDetails() throws SQLException{
 		SimpleDriverDataSource ds=new SimpleDriverDataSource();
 		ds.setDriver(new com.mysql.jdbc.Driver());
 		ds.setUrl("jdbc:mysql://localhost:3306/swat");
@@ -64,7 +77,19 @@ public class CSVFileHandler {
 	};
 	
 
-	
+	/**
+	 * Parses the given csv file, counts the weather events and their damages and inserts into database.
+	 * @param csv The csv file given as a BufferedReader object.
+	 * @param cs The list of normalized classifications.
+	 * @param keys The keys.
+	 * @param eventModel The event to store into the table that contains informationId and classficationId.
+	 * @param latLongs The latitue and longitude from the box made by user.
+	 * @param index
+	 * @throws ParseException When there's an error parsing the dateTime of a classification.
+	 * @throws NumberFormatException When there's an error parsing a latitude and longitude value from NCDC report.
+	 * @throws IOException When there's an issue reading the csv file.
+	 * @throws SQLException When there's an issue connecting to the database.
+	 */
 	public void handler(BufferedReader csv,List<NormalizeHelper> cs,String[] keys,Event eventModel,LatLongFromUser latLongs,int index) 
 			throws ParseException, NumberFormatException, IOException, SQLException{
 
@@ -73,9 +98,7 @@ public class CSVFileHandler {
 
 		Event eventReference = eventModel;
 		
-
-		//Start and End Dates
-		Date startTimeOfThisClass,endTimeOfThisClass;
+		
 
 		double topLatFromUser = latLongs.getNorthLat(),
 				bottomLatFromUser = latLongs.getSouthLat(),
@@ -90,8 +113,10 @@ public class CSVFileHandler {
 		//for(int a=0;a < cs.size();a++)
 		//{
 		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-		startTimeOfThisClass = dateFormat.parse(keys[cs.get(index).getStartIndex()]);
-		endTimeOfThisClass = dateFormat.parse(keys[cs.get(index).getEndIndex()]);
+		
+		//Start and End Dates
+		Date startTimeOfThisClassification = dateFormat.parse(keys[cs.get(index).getStartIndex()]);
+		Date endTimeOfThisClassification = dateFormat.parse(keys[cs.get(index).getEndIndex()]);
 		
 		String rows = null,localTimeZone = null;
 		double beginLat,beginLong,endLat,endLong,magnitude=0;
@@ -112,7 +137,7 @@ public class CSVFileHandler {
 			//Row Date and Time put together for easier comparison
 			dateFormat.setTimeZone(TimeZone.getTimeZone(localTimeZone));
 
-			String c = splitrows[3]+ " " + timeRectifier(splitrows[4]);
+			String c = splitrows[3]+ " " + prependZerosToTime(splitrows[4]);
 			Date rowTime = dateFormat.parse(c);
 
 			//The latitude and longitude in each row of the csv
@@ -122,8 +147,8 @@ public class CSVFileHandler {
 			endLong=Double.parseDouble(splitrows[33]);
 
 			//Check if the classified time is within the report's time bound.
-			if((rowTime.compareTo(startTimeOfThisClass) >= 0)
-					&& (rowTime.compareTo(endTimeOfThisClass) <= 0))
+			if((rowTime.compareTo(startTimeOfThisClassification) >= 0)
+					&& (rowTime.compareTo(endTimeOfThisClassification) <= 0))
 			{
 
 				//Check if the latitudes and longitudes match.
@@ -212,12 +237,9 @@ public class CSVFileHandler {
 					}
 				}
 			}
-			else if (rowTime.compareTo(endTimeOfThisClass) > 0){
+			else if (rowTime.compareTo(endTimeOfThisClassification) > 0){
 				break;
 			}
-
-
-
 		}
 
 		//}
@@ -244,26 +266,22 @@ public class CSVFileHandler {
 				"thunderstormCount:"+ thunderstormCount+"flashfloodCount:"+ flashfloodCount);
 		
 		
-		this.total = this.total + hailCount + tornadoCount + thunderstormCount + flashfloodCount;
+		this.totalEventCount = this.totalEventCount + hailCount + tornadoCount + thunderstormCount + flashfloodCount;
 		
 		addEventCountInMap(currentClass, hailCount, tornadoCount, thunderstormCount, flashfloodCount);
-		
-
-	}
-	
-	public Calendar getCalendarInstance(Date d,String timeZone)
-	{
-		Calendar c = new GregorianCalendar();
-		c.setTime(d);
-		c.setTimeZone(TimeZone.getTimeZone(timeZone));
-		return c;
 	}
 
-	
+	/**
+	 * Add the event count for a classification into the this.eventsCountMap.
+	 * @param classification The classification given by the user.
+	 * @param hailCount The count of hail events.
+	 * @param tornadoCount The count of tornado events.
+	 * @param thunderstormWindCount The count of thunderstormWind events.
+	 * @param flashfloodCount The count of flashflood events.
+	 */
 	private void addEventCountInMap(String classification, int hailCount, int tornadoCount, int thunderstormWindCount,int flashfloodCount){
 		
 		EventsCount eventsCount = eventsCountMap.get(classification);
-		
 		if(eventsCount == null)
 		{
 			eventsCount = new EventsCount();
@@ -280,36 +298,40 @@ public class CSVFileHandler {
 			eventsCount.setFlashfloodCount( eventsCount.getFlashfloodCount() + flashfloodCount );
 		}
 		
-		System.out.println("Inside the Map");
-		System.out.println("hailCount:" + eventsCount.getHailCount() +"tornadoCount:"+ eventsCount.getTornadoCount()+
+		logger.info("hailCount:" + eventsCount.getHailCount() +"tornadoCount:"+ eventsCount.getTornadoCount()+
 				"thunderstormCount:"+ eventsCount.getThunderstormWindCount()+"flashfloodCount:"+ eventsCount.getFlashfloodCount());
 		
 		eventsCountMap.put(classification, eventsCount);
 	}
-	
-	
-	
 
-	public String timeRectifier(String s)
-	{
-		switch(s.length()){
+	/**
+	 * Prepend zeros to time field in the NCDC report.
+	 * @param time The time to prepend zeros for.
+	 * @return The time with zeroes prepended.
+	 */
+	private String prependZerosToTime(String time) {
+		switch(time.length()){
 		case 1:
-			s="000"+s;
+			time="000"+time;
 			break;
 			
 		case 2:
-			s="00"+s;
+			time="00"+time;
 			break;
 		
 		case 3:
-			s="0"+s;
+			time="0"+time;
 			break;
 		
 		}
-		return s;
+		return time;
 	}
 
-	public void calculateDamage(String[] splitrows)
+	/**
+	 * Calculate the overall damages that occurred for the given report.
+	 * @param splitrows The row of the csv file.
+	 */
+	private void calculateDamage(String[] splitrows)
 	{
 		damages.setDeathCount(damages.getDeathCount() + Integer.parseInt(splitrows[8]));
 		damages.setInjuryCount(damages.getInjuryCount() + Integer.parseInt(splitrows[9]));
@@ -317,6 +339,13 @@ public class CSVFileHandler {
 		damages.setCropDamage(damages.getCropDamage() + Long.parseLong(splitrows[11]));
 	}
 	
+	/*public Calendar getCalendarInstance(Date d,String timeZone)
+	{
+		Calendar c = new GregorianCalendar();
+		c.setTime(d);
+		c.setTimeZone(TimeZone.getTimeZone(timeZone));
+		return c;
+	}*/
 	
 /*	public String timeConvert(String time, String convertTo) throws ParseException{
 		
