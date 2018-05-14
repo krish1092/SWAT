@@ -1,7 +1,5 @@
 package com.meteorology.swat.DAO;
 
-import java.sql.SQLException;
-
 import com.meteorology.swat.bean.SignUpForm;
 import com.meteorology.swat.bean.UserDetails;
 

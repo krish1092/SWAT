@@ -1,7 +1,5 @@
 package com.meteorology.swat.bean;
 
-import org.codehaus.jackson.map.ObjectMapper;
-
 public class ProfileEventCounts {
 
 	private long hailCount, thunderstormWindCount, flashfloodCount, tornadoCount;
