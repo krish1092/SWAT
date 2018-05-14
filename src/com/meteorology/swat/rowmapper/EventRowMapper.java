@@ -6,14 +6,18 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.meteorology.swat.model.EventStorageModel;
 
-
-
+/**
+ * Rowmapper for the event table.
+ * @author Krishnan Subramanian
+ *
+ */
 public class EventRowMapper implements RowMapper<EventStorageModel>{
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public EventStorageModel mapRow(ResultSet rs, int row) throws SQLException {
-		
-		
 		EventStorageModel esm= new EventStorageModel();
 		esm.setBeginLat(rs.getDouble("begin_lat"));
 		esm.setBeginLong(rs.getDouble("begin_long"));
@@ -21,6 +25,4 @@ public class EventRowMapper implements RowMapper<EventStorageModel>{
 		esm.setEndLong(rs.getDouble("end_long"));
 		return esm;
 	}
-
-	
 }

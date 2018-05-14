@@ -8,6 +8,11 @@ import java.util.HashMap;
 
 import org.springframework.jdbc.core.RowMapper;
 
+/**
+ * Rowmapper implementation for the piechart.
+ * @author Krishnan Subramanian
+ *
+ */
 public class PieChartMapper implements RowMapper<HashMap<String,BigDecimal>>{
 	@Override
 	public HashMap<String,BigDecimal> mapRow(ResultSet rs, int row) throws SQLException {
@@ -15,17 +20,9 @@ public class PieChartMapper implements RowMapper<HashMap<String,BigDecimal>>{
 		ResultSetMetaData metaData = rs.getMetaData();
 		int columns = metaData.getColumnCount();
 		HashMap<String,BigDecimal> pie= new HashMap<String,BigDecimal>();
-		
-		
-			for(int i=1; i<=columns;i++)
-			{
-				pie.put(metaData.getColumnName(i),(BigDecimal) rs.getObject(i));
-			}
-		
-		
+		for(int i=1; i<=columns;i++) {
+			pie.put(metaData.getColumnName(i),(BigDecimal) rs.getObject(i));
+		}
 		return pie;
 	}
-
 }
-
-

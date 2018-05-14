@@ -7,10 +7,16 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.meteorology.swat.bean.OverallResult;
 
-
-
+/**
+ * Rowmapper implementation for the results home page.
+ * @author Krishnan Subramanian
+ *
+ */
 public class OverallResultRowMapper implements RowMapper<OverallResult>{
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public OverallResult mapRow(ResultSet rs, int row) throws SQLException {
 		

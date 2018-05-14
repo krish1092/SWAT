@@ -7,10 +7,16 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.meteorology.swat.bean.LatLongFromDB;
 
-
-
+/**
+ * Latitude and longitude related mapping from the schema.
+ * @author Krishnan Subramanian
+ *
+ */
 public class LatLongMapper implements RowMapper<LatLongFromDB>{
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public LatLongFromDB mapRow(ResultSet rs, int row) throws SQLException {
 		LatLongFromDB latLongFromDB = new LatLongFromDB();
