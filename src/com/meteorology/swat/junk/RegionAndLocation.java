@@ -1,4 +1,4 @@
-package com.meteorology.swat.util;
+package com.meteorology.swat.junk;
 
 import java.util.ArrayList;
 import java.util.Collections;
