@@ -6,10 +6,24 @@ import javax.sql.DataSource;
 
 import com.meteorology.swat.bean.Classification;
 
+/**
+ * The DAO to interact with classification related schema.
+ * @author Krishnan Subramanian
+ *
+ */
 public interface ClassificationDAO {
 
+	/**
+	 * Insert the {@link Classification} into the schema.
+	 * @param cm The {@link Classification} to insert.
+	 * @return The classification id.
+	 */
 	public BigInteger insert(Classification cm);
 	
+	/**
+	 * The database information.
+	 * @param ds
+	 */
 	public void setDataSource(DataSource ds);
 		
 }
