@@ -1,7 +1,5 @@
 package com.meteorology.swat.DAOImpl;
 
-import java.sql.SQLException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;

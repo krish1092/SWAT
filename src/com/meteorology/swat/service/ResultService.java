@@ -12,18 +12,36 @@ import com.meteorology.swat.DAOImpl.ResultDAOImpl;
 import com.meteorology.swat.bean.OverallResult;
 import com.meteorology.swat.model.FilterForResult;
 
+/**
+ * A class to handle analytics related operations.
+ * @author Krishnan Subramanian
+ *
+ */
 public class ResultService {
 
 	private FilterForResult filterForResult;
+	
+	/**
+	 * Constructor that takes a filter as argument.
+	 * @param filterForResult
+	 */
 	public ResultService(FilterForResult filterForResult){
 		this.filterForResult = filterForResult;
 	}
+	
+	/**
+	 * Default constructor.
+	 */
 	public ResultService(){
 		
 	}
-	
-	
-	
+		
+	/**
+	 * Checks if the user has access to the results page.
+	 * @param userEmail The email address of the user.
+	 * @return true or false.
+	 * @throws SQLException If there's an issue connecting to the database.
+	 */
 	public boolean userHasResultAccess(String userEmail) throws SQLException{
 		ResultDAO resultDAO = new ResultDAOImpl();
 		resultDAO.setDataSource();
@@ -33,6 +51,11 @@ public class ResultService {
 		
 	}
 	
+	/**
+	 * Get all the results for the results home page.
+	 * @return A list of results.
+	 * @throws SQLException  If there's an issue connecting to the database.
+	 */
 	public List<OverallResult> getOverallResult() throws SQLException{
 		ResultDAO resultDAO = new ResultDAOImpl();
 		resultDAO.setDataSource();
@@ -40,6 +63,12 @@ public class ResultService {
 		return list;
 	}
 	
+	/**
+	 * Get all the results for a given US state.
+	 * @param state The US state to fetch the results for.
+	 * @return The results for the US state.
+	 * @throws SQLException If there's an issue connecting to the database.
+	 */
 	public List<OverallResult> fetchResultsWithState(String state)throws SQLException{
 		ResultDAO resultDAO = new ResultDAOImpl();
 		resultDAO.setDataSource();
@@ -47,6 +76,13 @@ public class ResultService {
 		return list;
 	}
 	
+	/**
+	 * Get all the results for a given date window.
+	 * @param from The from date.
+	 * @param to The to date.
+	 * @return The results for the given date window.
+	 * @throws SQLException If there's an issue connecting to the database.
+	 */
 	public List<OverallResult> fetchResultsWithDates(String from, String to)throws SQLException{
 		ResultDAO resultDAO = new ResultDAOImpl();
 		resultDAO.setDataSource();
@@ -54,6 +90,12 @@ public class ResultService {
 		return list;
 	}
 	
+	/**
+	 * 
+	 * @param month
+	 * @return
+	 * @throws SQLException If there's an issue connecting to the database.
+	 */
 	public List<OverallResult> fetchResultsWithMonth(String month)throws SQLException{
 		ResultDAO resultDAO = new ResultDAOImpl();
 		resultDAO.setDataSource();
@@ -61,8 +103,14 @@ public class ResultService {
 		return list;
 	}
 	
-	
-	
+	/**
+	 * 	
+	 * @param from
+	 * @param to
+	 * @param state
+	 * @return
+	 * @throws SQLException If there's an issue connecting to the database.
+	 */
 	public List<OverallResult> fetchResultsWithDateState(String from, String to, String state)throws SQLException{
 		ResultDAO resultDAO = new ResultDAOImpl();
 		resultDAO.setDataSource();
@@ -70,7 +118,14 @@ public class ResultService {
 		return list;
 	}
 	
-
+	/**
+	 * 
+	 * @param from
+	 * @param to
+	 * @param month
+	 * @return
+	 * @throws SQLException If there's an issue connecting to the database.
+	 */
 	public List<OverallResult> fetchResultsWithDateMonth(String from, String to, String month)throws SQLException{
 		ResultDAO resultDAO = new ResultDAOImpl();
 		resultDAO.setDataSource();
@@ -78,7 +133,13 @@ public class ResultService {
 		return list;
 	}
 	
-	
+	/**
+	 * 
+	 * @param state
+	 * @param month
+	 * @return
+	 * @throws SQLException If there's an issue connecting to the database.
+	 */
 	public List<OverallResult> fetchResultsWithStateMonth(String state,String month)throws SQLException{
 		ResultDAO resultDAO = new ResultDAOImpl();
 		resultDAO.setDataSource();
@@ -86,7 +147,15 @@ public class ResultService {
 		return list;
 	}
 	
-	
+	/**
+	 * 
+	 * @param from
+	 * @param to
+	 * @param month
+	 * @param state
+	 * @return
+	 * @throws SQLException If there's an issue connecting to the database.
+	 */
 	public List<OverallResult> fetchResultsWithDateMonthState(String from, String to,String month,String state)throws SQLException{
 		ResultDAO resultDAO = new ResultDAOImpl();
 		resultDAO.setDataSource();

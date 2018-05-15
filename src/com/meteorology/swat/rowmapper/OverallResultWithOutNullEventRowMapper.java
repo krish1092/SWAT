@@ -7,10 +7,16 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.meteorology.swat.bean.OverallResult;
 
-
-
+/**
+ * Rowmapper implementation for overall result without null events.
+ * @author Krishnan Subramanian
+ *
+ */
 public class OverallResultWithOutNullEventRowMapper implements RowMapper<OverallResult>{
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public OverallResult mapRow(ResultSet rs, int row) throws SQLException {
 		
