@@ -16,7 +16,7 @@ email_address varchar(30) not null unique,
 password varchar(64) not null,
 name char(30) not null,
 authenticated tinyint,
-expert tinyint,
+expert tinyint
 );
 
 #Users Table End

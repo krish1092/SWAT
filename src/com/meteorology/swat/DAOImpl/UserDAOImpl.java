@@ -9,6 +9,7 @@ import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.stereotype.Repository;
 
 import com.meteorology.swat.DAO.UserDAO;
+import com.meteorology.swat.bean.LoginForm;
 import com.meteorology.swat.bean.SignUpForm;
 import com.meteorology.swat.bean.UserDetails;
 import com.meteorology.swat.rowmapper.UserMapper;
@@ -104,11 +105,21 @@ public class UserDAOImpl implements UserDAO {
 		if(userExistsInDB == 1) return true;
 		else return false;		
 	}
+	
+	@Override
+	public boolean validateUserLogin(LoginForm loginForm) {
+		String sql = "select exists ( select 1 from users where email_address = ? AND password = ? limit 1)";
+		String password = new String(loginForm.getPassword());
+		int validLogin = jdbcTemplate.queryForObject(sql,Integer.class, new Object[]{loginForm.getEmailID(), password});
+		if(validLogin == 1) return true;
+		else return false;
+	}
 
 	@Override
 	public UserDetails getUserDetails(String userName) {
 		
 		String sql = "select name, password from users where email_address = ?";
+		
 		
 		try{
 			UserDetails userDetails = jdbcTemplate.queryForObject(sql, new Object[]{userName},new UserMapper());

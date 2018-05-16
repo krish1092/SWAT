@@ -1,5 +1,6 @@
 package com.meteorology.swat.DAO;
 
+import com.meteorology.swat.bean.LoginForm;
 import com.meteorology.swat.bean.SignUpForm;
 import com.meteorology.swat.bean.UserDetails;
 
@@ -36,6 +37,13 @@ public interface UserDAO {
 	 * @return
 	 */
 	public UserDetails getUserDetails(String emailAddress);
+	
+	/**
+	 * Validate the user login.
+	 * @param loginForm The login credentials with the password encrypted.
+	 * @return true or false indicating if the login was successful.
+	 */
+	public boolean validateUserLogin(LoginForm loginForm);
 	
 	/**
 	 * Update user password of an already logged in user.

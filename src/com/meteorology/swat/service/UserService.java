@@ -174,16 +174,19 @@ public class UserService {
 	 * @throws SQLException When there's an issue connecting to the database.
 	 */
 	public boolean login(LoginForm login) throws SQLException{
+		String encryptedPassword = encodePassword(login.getPassword().toString());
+		login.setPassword(encryptedPassword.toCharArray());
 		UserDAO userDAO = new UserDAOImpl();
 		userDAO.setDataSource();
-		userDetailsFromDB = userDAO.getUserDetails(login.getEmailID());
+		return userDAO.validateUserLogin(login);
+		/*userDetailsFromDB = userDAO.getUserDetails(login.getEmailID());
 		if(userDetailsFromDB != null){
 			BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(10);
 			return bCryptPasswordEncoder.matches(new String(login.getPassword()), userDetailsFromDB.getPassword());
 		}
 		else{
 			return false;
-		}
+		}*/
 	}
 	
 	/**

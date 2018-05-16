@@ -248,7 +248,7 @@ public class HomeController {
 
 		// Time Zone Conversion
 
-		System.out.println(eventModelList.size());
+		//logger.info(eventModelList.size());
 		
 		/*RegionAndLocationUtility reg = new RegionAndLocationUtility();
 		String[] timeZonesInRegion = reg.getTimeZones();*/
@@ -378,8 +378,8 @@ public class HomeController {
 		latLongFromUser.setWestLong(westLongitudeOfUser);
 		
 		
-		System.out.println("northLatitudeOfUser:" + northLatitudeOfUser + " southLatitudeOfUser:"+ southLatitudeOfUser);
-		System.out.println("eastLongitudeOfUser:" + eastLongitudeOfUser + " westLongitudeOfUser:" + westLongitudeOfUser);
+		logger.info("northLatitudeOfUser:" + northLatitudeOfUser + " southLatitudeOfUser:"+ southLatitudeOfUser);
+		logger.info("eastLongitudeOfUser:" + eastLongitudeOfUser + " westLongitudeOfUser:" + westLongitudeOfUser);
 		
 		return latLongFromUser;
 

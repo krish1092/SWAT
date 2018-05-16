@@ -1,5 +1,10 @@
 package com.meteorology.swat.model;
 
+/**
+ * Filter to analyze the results.
+ * @author Krishnan Subramanian
+ *
+ */
 public class FilterForResult {
 	
 	private String fromDate, toDate;
