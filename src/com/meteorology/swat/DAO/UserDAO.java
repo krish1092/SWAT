@@ -1,5 +1,6 @@
 package com.meteorology.swat.DAO;
 
+import com.meteorology.swat.DAOImpl.UserDAOImpl;
 import com.meteorology.swat.bean.SignUpForm;
 import com.meteorology.swat.bean.UserDetails;
 
@@ -90,5 +91,18 @@ public interface UserDAO {
 	 * @param purpose The purpose of the authentication token.
 	 */
 	public void insertUserAuth(String token, String emailAddress, String purpose);
-
+	
+	/**
+	 * A factory class to get the Implementation.
+	 *
+	 */
+	public static class Factory {
+		/**
+		 * Create a {@link UserDAO} object.
+		 * @return a {@link UserDAO} object.
+		 */
+		public UserDAO create() {
+			return new UserDAOImpl();
+		}
+	}
 }

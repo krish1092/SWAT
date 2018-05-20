@@ -5,11 +5,13 @@ import java.util.Map;
 
 import org.joda.time.DateTime;
 
+import com.meteorology.swat.DAOImpl.UserDAOImpl;
+import com.meteorology.swat.DAOImpl.UserProfileDAOImpl;
 import com.meteorology.swat.bean.ProfileResult;
 
 /**
  * The DAO to interact with user profile related schema.
- * @author krishnan
+ * @author Krishnan Subramanian
  *
  */
 public interface UserProfileDAO {
@@ -51,4 +53,17 @@ public interface UserProfileDAO {
 	 */
 	public Map< DateTime, Integer> getFlashfloodCountsForInfoID(long infoID);
 	
+	/**
+	 * A factory class to get the Implementation.
+	 *
+	 */
+	public static class Factory {
+		/**
+		 * Create a {@link UserProfileDAO} object.
+		 * @return a {@link UserProfileDAO} object.
+		 */
+		public UserProfileDAO create() {
+			return new UserProfileDAOImpl();
+		}
+	}	
 }

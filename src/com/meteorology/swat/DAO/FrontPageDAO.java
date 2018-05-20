@@ -1,5 +1,7 @@
 package com.meteorology.swat.DAO;
 
+import com.meteorology.swat.DAOImpl.FrontPageDAOImpl;
+
 /**
  * The DAO to interact with front page related schema.
  * @author Krishnan Subramanian
@@ -27,4 +29,17 @@ public interface FrontPageDAO {
 	 */
 	public long getSystemsCount();
 	
+	/**
+	 * A factory class to get the Implementation.
+	 *
+	 */
+	public static class Factory {
+		/**
+		 * Create a {@link FrontPageDAO} object.
+		 * @return a {@link FrontPageDAO} object.
+		 */
+		public FrontPageDAO create() {
+			return new FrontPageDAOImpl();
+		}
+	}
 }

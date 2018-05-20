@@ -4,6 +4,7 @@ import java.math.BigInteger;
 
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
+import com.meteorology.swat.DAOImpl.InformationDAOImpl;
 import com.meteorology.swat.bean.Information;
 
 /**
@@ -26,4 +27,17 @@ public interface InformationDAO {
 	 */
 	public void setDataSource(SingleConnectionDataSource ds);
 	
+	/**
+	 * A factory class to get the Implementation.
+	 *
+	 */
+	public static class Factory {
+		/**
+		 * Create a {@link InformationDAO} object.
+		 * @return a {@link InformationDAO} object.
+		 */
+		public InformationDAO create() {
+			return new InformationDAOImpl();
+		}
+	}
 }
