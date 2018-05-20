@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.meteorology.swat.DAOImpl.ResultDAOImpl;
 import com.meteorology.swat.bean.OverallResult;
 import com.meteorology.swat.model.FilterForResult;
 
@@ -57,6 +58,20 @@ public interface ResultDAO {
 	
 	
 	public List<OverallResult> fetchResultsWithDateMonthState(String from, String to, String month, String state);
+	
+	/**
+	 * A factory class to get the Implementation.
+	 *
+	 */
+	public static class Factory {
+		/**
+		 * Create a {@link ResultDAO} object.
+		 * @return a {@link ResultDAO} object.
+		 */
+		public ResultDAO create() {
+			return new ResultDAOImpl();
+		}
+	}
 	
 	
 }

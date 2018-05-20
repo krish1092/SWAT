@@ -4,6 +4,7 @@ import java.math.BigInteger;
 
 import javax.sql.DataSource;
 
+import com.meteorology.swat.DAOImpl.ClassificationDAOImpl;
 import com.meteorology.swat.bean.Classification;
 
 /**
@@ -25,5 +26,18 @@ public interface ClassificationDAO {
 	 * @param ds
 	 */
 	public void setDataSource(DataSource ds);
-		
+	
+	/**
+	 * A factory class to get the Implementation.
+	 *
+	 */
+	public static class Factory {
+		/**
+		 * Create a {@link ClassificationDAO} object.
+		 * @return a {@link ClassificationDAO} object.
+		 */
+		public ClassificationDAO create() {
+			return new ClassificationDAOImpl();
+		}
+	}		
 }
