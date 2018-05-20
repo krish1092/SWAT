@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 import com.meteorology.swat.DAO.ClassificationDAO;
@@ -19,8 +20,10 @@ import com.meteorology.swat.util.NormalizeHelper;
  */
 public class ClassificationService {
 	
+	private static final Logger logger = org.slf4j.LoggerFactory.getLogger(ClassificationService.class);
+	
 	/**
-	 * Store the classfication data into the schema.
+	 * Store the classification data into the schema.
 	 * @param infoID The information id from the schema.
 	 * @param singleConnectionDataSource The database connection info.
 	 * @param normalizeHelperList The normalized sequence info.
@@ -35,7 +38,6 @@ public class ClassificationService {
 
 		ClassificationDAO classificationDAO = new ClassificationDAOImpl();
 		classificationDAO.setDataSource(singleConnectionDataSource);
-
 		
 		BigInteger classID;
 
@@ -46,12 +48,12 @@ public class ClassificationService {
 			classificationClass.setStartTime(keys[normalizeHelper.getStartIndex()]);
 			classificationClass.setEndTime(keys[normalizeHelper.getEndIndex()]);
 			classificationClass.setClassification(normalizeHelper.getCurrentClassification());
-			//classificationClass.setCount(normalizeHelper.getCurrentClassificationCount());
+			classificationClass.setCount(normalizeHelper.getCurrentClassificationCount());
 
 			//Get the classification id for cross referencing to other tables in the schema.
 			classID = classificationDAO.insert(classificationClass);
 
-			//Setting the infoID and classID from the tables, for foreign key mapping
+			//Setting the infoID and classID from the tables, for foreign key mapping.
 			Event eventModel = new Event();
 			eventModel.setInfoId(infoID);
 			eventModel.setClassificationId(classID);

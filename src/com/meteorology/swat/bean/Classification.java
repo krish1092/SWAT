@@ -43,6 +43,4 @@ public class Classification {
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
-	
-	
 }
