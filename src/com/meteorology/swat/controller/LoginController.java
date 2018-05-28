@@ -28,13 +28,25 @@ public class LoginController {
 	
 	private UserService userService;
 	
+	/**
+	 * Display the login form.
+	 * @param request
+	 * @param response
+	 * @return The login form.
+	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView displayLogin(HttpServletRequest request, HttpServletResponse response)
+	public ModelAndView displayLogin()
 	{
 		ModelAndView model = new ModelAndView("login");
 		return model;
 	}
 	
+	/**
+	 * Log the user out of the application.
+	 * @param request The request object.
+	 * @param status The session status.
+	 * @return Redirect the user to the same page.
+	 */
 	@RequestMapping(value = "/logout")
 	public String logout(WebRequest request, SessionStatus status){
 		
@@ -43,10 +55,16 @@ public class LoginController {
 		return "redirect:/";
 	}
 	
-	
-	
+	/**
+	 * Log the user into the application.
+	 * @param request The request 
+	 * @param response The response form.
+	 * @param loginForm The login credentials.
+	 * @param session The current session.
+	 * @return
+	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public @ResponseBody ModelAndView executeLogin(HttpServletRequest request, HttpServletResponse response,
+	public @ResponseBody ModelAndView executeLogin(HttpServletRequest request,
 			@ModelAttribute("loginForm")  LoginForm loginForm,HttpSession session)
 	{
 		ModelAndView model = null;
@@ -75,37 +93,6 @@ public class LoginController {
 		}
 		return model;
 	}
-	
-	
-	/*@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public @ResponseBody ModelAndView executeLogin(HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute("loginForm")  LoginForm loginForm,HttpSession session)
-	{
-		ModelAndView model = null;
-		userService = new UserService();
-		
-		try{
-			boolean loginCredentialsCorrect = userService.login(loginForm);
-			
-			if(loginCredentialsCorrect)
-			{
-				logger.info("User "+loginForm.getEmailID()+" Successfully logged in!");
-				request.setAttribute("signedInUser", loginForm.getEmailID());
-				session.setAttribute("loggedInUser", userService.getName());
-				model = new ModelAndView("signedin");
-			}
-			else{
-				model = new ModelAndView("login");
-				model.addObject("loginBean", new LoginForm());
-				request.setAttribute("error", "Error in Credentials");
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-			model = new ModelAndView("error");
-		}
-		return model;
-	}
-	*/
 	
 	@RequestMapping(value = "/forgotpassword", method = RequestMethod.GET)
 	public String forgotPassword(HttpServletRequest request, HttpServletResponse response,
@@ -149,7 +136,7 @@ public class LoginController {
 	
 	@RequestMapping(value = "/changePassword", method = RequestMethod.GET )
 	public String changePasswordFormDisplay(Model model, @RequestParam("token") String token){
-		if(token.equalsIgnoreCase("") || token == null){
+		if(token == null || token.trim().equalsIgnoreCase("")){
 			model.addAttribute("error", "Give a unique token");
 			return "error";
 		}

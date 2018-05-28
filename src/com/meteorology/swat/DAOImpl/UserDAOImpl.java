@@ -36,21 +36,6 @@ public class UserDAOImpl implements UserDAO {
 		
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
-	
-	@Override
-	public String getPassword(String userEmail) {
-		try
-		{
-			String sql="select password from users where email_address = ?";
-			String passwordFromDB = jdbcTemplate.queryForObject(sql, String.class, userEmail);
-			return passwordFromDB;
-		}catch(NullPointerException | EmptyResultDataAccessException e)
-		{
-			
-			return null;
-		}
-		
-	}
 
 	@Override
 	public boolean getUsernameAndEmailID(String userName) {
@@ -123,19 +108,13 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean authenticate(String token) {
-		String sql = "update users set users.authenticated = 1 "
-				+ "where users.email_address = "
+	public boolean activateToken(String token) throws DataAccessException {
+		String sql = "update users set users.authenticated = 1 " + "where users.email_address = "
 				+ "(select email_address from user_auth where user_auth.token = ? AND user_auth.auth_purpose = 'activation');";
-		try{
-			jdbcTemplate.update(sql, new Object[]{token});
-			
-			sql = "delete from user_auth where token = ? AND user_auth.auth_purpose = 'activation'";
-			jdbcTemplate.update(sql, new Object[]{token});
-			return true;
-		}catch(DataAccessException e){
-			return false;
-		}
+
+		jdbcTemplate.update(sql, new Object[] { token });
+		invalidateChangePasswordToken(token);
+		return true;
 	}
 
 	@Override
@@ -157,6 +136,9 @@ public class UserDAOImpl implements UserDAO {
 		
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void insertUserAuth(String token, String emailAddress, String purpose) {
 		String sql = "insert into user_auth (email_address,token, auth_purpose) values (?,?,?)";
@@ -165,8 +147,13 @@ public class UserDAOImpl implements UserDAO {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		
 	}
-
-
+	
+	@Override
+	public String getPassword(String emailAddress) {
+		//String sql = "select exists(select 1 from users where users.email_address = ? AND users.password = ? limit 1)";
+		String sql = "select password from users where email_address = ?";
+		String password = jdbcTemplate.queryForObject(sql,new Object[] {emailAddress}, String.class);
+		return password;
+	}
 }

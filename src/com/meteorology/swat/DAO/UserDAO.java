@@ -1,5 +1,7 @@
 package com.meteorology.swat.DAO;
 
+import java.sql.SQLException;
+
 import com.meteorology.swat.DAOImpl.UserDAOImpl;
 import com.meteorology.swat.bean.SignUpForm;
 import com.meteorology.swat.bean.UserDetails;
@@ -10,13 +12,6 @@ import com.meteorology.swat.bean.UserDetails;
  *
  */
 public interface UserDAO {
-	
-	/**
-	 * To be removed
-	 * @param emailAddress
-	 * @return
-	 */
-	public String getPassword(String emailAddress);
 	
 	/**
 	 * To be removed.
@@ -69,7 +64,7 @@ public interface UserDAO {
 	 * @param token The token to authenticate.
 	 * @return True or false indicating if the authentication was successful.
 	 */
-	public boolean authenticate(String token);
+	public boolean activateToken(String token);
 	
 	/**
 	 * Get the email address given the token.
@@ -92,6 +87,8 @@ public interface UserDAO {
 	 */
 	public void insertUserAuth(String token, String emailAddress, String purpose);
 	
+	public String getPassword(String emailAddress);
+	
 	/**
 	 * A factory class to get the Implementation.
 	 *
@@ -101,7 +98,7 @@ public interface UserDAO {
 		 * Create a {@link UserDAO} object.
 		 * @return a {@link UserDAO} object.
 		 */
-		public UserDAO create() {
+		public static UserDAO getDefaultInstance() {
 			return new UserDAOImpl();
 		}
 	}

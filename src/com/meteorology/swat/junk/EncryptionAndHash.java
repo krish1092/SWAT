@@ -104,7 +104,7 @@ public class EncryptionAndHash {
         return dataSource;
 	}
 	
-	public String retrievePasswordFromDataBase(String userName)
+	/*public String retrievePasswordFromDataBase(String userName)
 	{
 		UserDAO userDAO = new UserDAOImpl();
 		try{
@@ -115,7 +115,7 @@ public class EncryptionAndHash {
 		}
 		String retrievedPassword = userDAO.getPassword(userName);
 		return retrievedPassword;
-	}
+	}*/
 }
 
 
