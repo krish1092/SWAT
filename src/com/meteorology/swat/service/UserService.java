@@ -33,6 +33,7 @@ public class UserService {
 	private String url;
 	private boolean passwordEmailSent,activationEmailSent;
 	private Properties properties;
+	private static String BASE_URL = "http://meteor.geol.iastate.edu/swat/";
 	
 	/**
 	 * The url to be constructed for the user to receive the email.
@@ -306,5 +307,53 @@ public class UserService {
 		}catch(MessagingException m){
 			m.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Send an email to the user to confirm the account deletion.
+	 * @param emailAddress The email address to send the deletion confirmation email to.
+	 */
+	public void deleteUserAccount(String emailAddress) {
+		setProperties();
+		Session session = Session.getDefaultInstance(properties);
+		try{
+			MimeMessage  m = new MimeMessage(session);
+			
+			//From address
+			m.setFrom(new InternetAddress("noreply@cyclone.agron.iastate.edu"));
+			
+			//To address
+			m.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailAddress));
+			
+			//Email Contents
+			m.setSubject("Severe Weather Analysis Tool - Password Change");
+			
+			//HTML Content for Email 
+			StringBuffer s = new StringBuffer();
+			s.append("Hello,");
+			s.append("<br><br>");
+			s.append("<p style = \" padding-left:5em;\"	>"
+					+ "Please click the following link to confirm deletion of your account.");
+			s.append("Please note that your account will no longer be accessible.");
+			s.append("In adherence to our privacy policy, we shall anonymize and retain your classifications.");
+			s.append("<br><br>");
+			s.append("</p>");
+			url = BASE_URL + this.uuid.toString();
+			System.out.println(url);
+			System.out.println("<a target=\"_blank\" href=\""+url+ "\"" + ">" + url +"</a>");
+			s.append("<a "
+					+ "target=\"_blank\" "
+					+ "href=\""+url+ "\"" 
+					+ ">" 
+					+ url 
+					+"</a>"
+					);
+			String charset = "UTF-8";
+			m.setText(s.toString(),charset , "html");
+			Transport.send(m);
+		}catch(MessagingException m){
+			m.printStackTrace();
+		}
+		
 	}
 }
