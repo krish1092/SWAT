@@ -101,7 +101,7 @@ public interface UserDAO {
 		 * Create a {@link UserDAO} object.
 		 * @return a {@link UserDAO} object.
 		 */
-		public UserDAO create() {
+		public static UserDAO getDefaultInstance() {
 			return new UserDAOImpl();
 		}
 	}

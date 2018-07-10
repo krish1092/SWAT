@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 import com.meteorology.swat.DAO.EventDAO;
-import com.meteorology.swat.DAOImpl.EventDAOImpl;
 import com.meteorology.swat.bean.Event;
 import com.meteorology.swat.model.Damages;
 import com.meteorology.swat.model.EventsCount;
@@ -252,7 +251,7 @@ public class CSVFileHandler {
 	
 		if(eventsList.size()>0)
 		{
-			EventDAO eDAO=new EventDAOImpl();
+			EventDAO eDAO=EventDAO.Factory.getDefaultInstance();
 
 			eDAO.setDataSource(getDataSourceDetails());
 			eDAO.insert(eventsList);

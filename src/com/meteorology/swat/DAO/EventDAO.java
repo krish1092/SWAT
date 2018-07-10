@@ -31,7 +31,7 @@ public interface EventDAO {
 		 * Create a {@link EventDAO} object.
 		 * @return a {@link EventDAO} object.
 		 */
-		public EventDAO create() {
+		public static EventDAO getDefaultInstance() {
 			return new EventDAOImpl();
 		}
 	}

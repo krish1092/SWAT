@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.meteorology.swat.DAO.UserDAO;
-import com.meteorology.swat.DAOImpl.UserDAOImpl;
 import com.meteorology.swat.bean.LoginForm;
 import com.meteorology.swat.bean.SignUpForm;
 import com.meteorology.swat.bean.UserDetails;
@@ -138,7 +137,7 @@ public class UserService {
 	 * @throws SQLException When there's an issue connecting to the database.
 	 */
 	public void signup(SignUpForm s) throws SQLException{
-		UserDAOImpl userDAO = new UserDAOImpl();
+		UserDAO userDAO = UserDAO.Factory.getDefaultInstance();
 		userDAO.setDataSource();
 		
 		//Encoding the password using BCrypt algorithm!
@@ -175,7 +174,7 @@ public class UserService {
 	 * @throws SQLException When there's an issue connecting to the database.
 	 */
 	public boolean login(LoginForm login) throws SQLException{
-		UserDAO userDAO = new UserDAOImpl();
+		UserDAO userDAO = UserDAO.Factory.getDefaultInstance();
 		userDAO.setDataSource();
 		userDetailsFromDB = userDAO.getUserDetails(login.getEmailID());
 		if(userDetailsFromDB != null){
@@ -201,7 +200,7 @@ public class UserService {
 	 * @throws SQLException When there's an issue connecting to the database.
 	 */
 	public boolean authenticate(String token) throws SQLException{
-		UserDAO userDAO = new UserDAOImpl();
+		UserDAO userDAO = UserDAO.Factory.getDefaultInstance();
 		userDAO.setDataSource();
 		return userDAO.authenticate(token);
 	}
@@ -222,7 +221,7 @@ public class UserService {
 	 */
 	public boolean changePassword(String token, String password){
 		
-		UserDAO userDAO = new UserDAOImpl();
+		UserDAO userDAO = UserDAO.Factory.getDefaultInstance();
 		userDAO.setDataSource();
 		String emailAddress = userDAO.getEmailAddressWithChangePasswordToken(token);
 		if(emailAddress == null)
@@ -244,7 +243,7 @@ public class UserService {
 	 * @param emailAddress The email address to send the user to.
 	 */
 	public void forgotPassword(String emailAddress){
-		UserDAO userDAO = new UserDAOImpl();
+		UserDAO userDAO = UserDAO.Factory.getDefaultInstance();
 		userDAO.setDataSource();
 		boolean userExists = userDAO.userAlreadyExists(emailAddress);
 		 if(userExists)

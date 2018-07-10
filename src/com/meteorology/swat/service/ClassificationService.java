@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 import com.meteorology.swat.DAO.ClassificationDAO;
-import com.meteorology.swat.DAOImpl.ClassificationDAOImpl;
 import com.meteorology.swat.bean.Classification;
 import com.meteorology.swat.bean.Event;
 import com.meteorology.swat.util.NormalizeHelper;
@@ -33,7 +32,7 @@ public class ClassificationService {
 		Classification classificationClass = new Classification();
 		classificationClass.setInfoID(infoID);
 
-		ClassificationDAO classificationDAO = new ClassificationDAOImpl();
+		ClassificationDAO classificationDAO = ClassificationDAO.Factory.getDefaultInstance();
 		classificationDAO.setDataSource(singleConnectionDataSource);
 
 		

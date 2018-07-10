@@ -36,7 +36,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.meteorology.swat.DAO.ClassificationDAO;
 import com.meteorology.swat.DAO.EventStorageDAO;
 import com.meteorology.swat.DAO.InformationDAO;
-import com.meteorology.swat.DAOImpl.ClassificationDAOImpl;
 import com.meteorology.swat.DAOImpl.EventStorageDAOImpl;
 import com.meteorology.swat.DAOImpl.InformationDAOImpl;
 import com.meteorology.swat.bean.Classification;
@@ -438,7 +437,7 @@ public class HomeController {
 		Classification classificationClass = new Classification();
 		classificationClass.setInfoID(infoID);
 
-		ClassificationDAO classificationDAO = new ClassificationDAOImpl();
+		ClassificationDAO classificationDAO = ClassificationDAO.Factory.getDefaultInstance();
 		classificationDAO.setDataSource(singleConnectionDataSource);
 
 		

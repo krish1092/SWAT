@@ -36,7 +36,7 @@ public interface ClassificationDAO {
 		 * Create a {@link ClassificationDAO} object.
 		 * @return a {@link ClassificationDAO} object.
 		 */
-		public ClassificationDAO create() {
+		public static ClassificationDAO getDefaultInstance() {
 			return new ClassificationDAOImpl();
 		}
 	}		
