@@ -52,6 +52,7 @@ import com.meteorology.swat.service.FrontPageService;
 import com.meteorology.swat.service.LatLongService;
 import com.meteorology.swat.service.UnmodifiedClassificationService;
 import com.meteorology.swat.util.CSVFileHandler;
+import com.meteorology.swat.util.DBProperties;
 import com.meteorology.swat.util.NCDCParse;
 import com.meteorology.swat.util.NormalizeHelper;
 import com.meteorology.swat.util.Normalizer;
@@ -385,37 +386,40 @@ public class HomeController {
 
 	}
 	
-	
-	
-	
+	/**
+	 * @return The about page.
+	 */
 	@RequestMapping(value = "/about", method = RequestMethod.GET)
 	public String about()
 	{
 		return "about";
 	}
 	
-	public DataSource dataSourceDetails() throws SQLException
+	/**
+	 * To be modified.
+	 * @return
+	 * @throws SQLException
+	 */
+	private DataSource dataSourceDetails() throws SQLException
 	{
 		SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
         dataSource.setDriver(new com.mysql.jdbc.Driver());
-        dataSource.setUrl("jdbc:mysql://localhost:3306/swat");
-        dataSource.setUsername("root");
-        dataSource.setPassword("SwatTool@2015");
-        //dataSource.setPassword("Swat@2016");
+        dataSource.setUrl(DBProperties.getDbUrl());
+        dataSource.setUsername(DBProperties.getDbUsername());
+        dataSource.setPassword(DBProperties.getDbPassword());
         return dataSource;
 	}
 	
-	
-
-	
-	
-	public SingleConnectionDataSource getSingleConnectionDataSource()
+	/**
+	 * To be modified.
+	 * @return
+	 */
+	private SingleConnectionDataSource getSingleConnectionDataSource()
 	{
 		SingleConnectionDataSource singleConnectionDataSource = new SingleConnectionDataSource();
-		singleConnectionDataSource.setUrl("jdbc:mysql://localhost:3306/swat");
-		singleConnectionDataSource.setUsername("root");
-		singleConnectionDataSource.setPassword("SwatTool@2015");
-		//singleConnectionDataSource.setPassword("Swat@2016");
+		singleConnectionDataSource.setUrl(DBProperties.getDbUrl());
+		singleConnectionDataSource.setUsername(DBProperties.getDbUsername());
+		singleConnectionDataSource.setPassword(DBProperties.getDbPassword());
 		return singleConnectionDataSource;
 	}
 	
