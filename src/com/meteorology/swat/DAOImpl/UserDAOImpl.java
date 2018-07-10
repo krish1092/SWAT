@@ -12,6 +12,7 @@ import com.meteorology.swat.DAO.UserDAO;
 import com.meteorology.swat.bean.SignUpForm;
 import com.meteorology.swat.bean.UserDetails;
 import com.meteorology.swat.rowmapper.UserMapper;
+import com.meteorology.swat.util.DBProperties;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -25,9 +26,9 @@ public class UserDAOImpl implements UserDAO {
 		SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
 		try{
 			dataSource.setDriver(new com.mysql.jdbc.Driver());
-	        dataSource.setUrl("jdbc:mysql://localhost:3306/swat");
-	        dataSource.setUsername("root");
-	        dataSource.setPassword("SwatTool@2015");
+			dataSource.setUrl(DBProperties.getDbUrl());
+        	dataSource.setUsername(DBProperties.getDbUsername());
+        	dataSource.setPassword(DBProperties.getDbPassword());
 	        //dataSource.setPassword("Swat@2016");
 		}catch(Exception e){
 			e.printStackTrace();

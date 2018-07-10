@@ -11,21 +11,18 @@ import com.meteorology.swat.DAO.LatLongDAO;
 import com.meteorology.swat.bean.LatLongFromDB;
 import com.meteorology.swat.model.StartAndEndDates;
 import com.meteorology.swat.rowmapper.LatLongMapper;
+import com.meteorology.swat.util.DBProperties;
 
 public class LatLongDAOImpl implements LatLongDAO {
 
 	private JdbcTemplate jdbcTemplate;
 	@Override
 	public void setDataSource() throws SQLException {
-
-		
 		SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
         dataSource.setDriver(new com.mysql.jdbc.Driver());
-        dataSource.setUrl("jdbc:mysql://localhost:3306/swat");
-        dataSource.setUsername("root");
-        dataSource.setPassword("SwatTool@2015");
-        //dataSource.setPassword("Swat@2016");
-		
+        dataSource.setUrl(DBProperties.getDbUrl());
+        dataSource.setUsername(DBProperties.getDbUsername());
+        dataSource.setPassword(DBProperties.getDbPassword());		
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	
 	}

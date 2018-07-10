@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.meteorology.swat.DAO.UserDAO;
 import com.meteorology.swat.DAOImpl.UserDAOImpl;
+import com.meteorology.swat.util.DBProperties;
 
 
 
@@ -97,9 +98,9 @@ public class EncryptionAndHash {
 		SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
 		
         dataSource.setDriver(new com.mysql.jdbc.Driver());
-        dataSource.setUrl("jdbc:mysql://localhost:3306/swat");
-        dataSource.setUsername("root");
-        dataSource.setPassword("SwatTool@2015");
+        dataSource.setUrl(DBProperties.getDbUrl());
+    	dataSource.setUsername(DBProperties.getDbUsername());
+    	dataSource.setPassword(DBProperties.getDbPassword());
         //dataSource.setPassword("Swat@2016");
         return dataSource;
 	}

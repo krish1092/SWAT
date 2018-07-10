@@ -14,6 +14,7 @@ import com.meteorology.swat.bean.OverallResult;
 import com.meteorology.swat.model.FilterForResult;
 import com.meteorology.swat.rowmapper.OverallResultRowMapper;
 import com.meteorology.swat.rowmapper.OverallResultWithOutNullEventRowMapper;
+import com.meteorology.swat.util.DBProperties;
 
 public class ResultDAOImpl implements ResultDAO {
 
@@ -24,10 +25,9 @@ public class ResultDAOImpl implements ResultDAO {
 
 		SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
         dataSource.setDriver(new com.mysql.jdbc.Driver());
-        dataSource.setUrl("jdbc:mysql://localhost:3306/swat");
-        dataSource.setUsername("root");
-        dataSource.setPassword("SwatTool@2015");
-        //dataSource.setPassword("Swat@2016");
+        dataSource.setUrl(DBProperties.getDbUrl());
+    	dataSource.setUsername(DBProperties.getDbUsername());
+    	dataSource.setPassword(DBProperties.getDbPassword());
         this.jdbcTemplate = new JdbcTemplate(dataSource);
 	
 

@@ -12,6 +12,7 @@ import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import com.meteorology.swat.DAO.UserProfileDAO;
 import com.meteorology.swat.bean.ProfileResult;
 import com.meteorology.swat.rowmapper.ProfileResultResultSetExtractor;
+import com.meteorology.swat.util.DBProperties;
 
 public class UserProfileDAOImpl implements UserProfileDAO {
 
@@ -24,9 +25,9 @@ public class UserProfileDAOImpl implements UserProfileDAO {
         
 		try{
 			dataSource.setDriver(new com.mysql.jdbc.Driver());
-			dataSource.setUrl("jdbc:mysql://localhost:3306/swat");
-	        dataSource.setUsername("root");
-	        dataSource.setPassword("SwatTool@2015");
+			dataSource.setUrl(DBProperties.getDbUrl());
+        	dataSource.setUsername(DBProperties.getDbUsername());
+        	dataSource.setPassword(DBProperties.getDbPassword());
 	        this.jdbcTemplate = new JdbcTemplate(dataSource);
 		}
 		catch(SQLException e)
