@@ -7,6 +7,7 @@ import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
 import com.meteorology.swat.DAO.NullEventsDAO;
 import com.meteorology.swat.bean.NullEvents;
+import com.meteorology.swat.util.DBProperties;
 
 public class NullEventsDAOImpl implements NullEventsDAO {
 	
@@ -17,10 +18,9 @@ public class NullEventsDAOImpl implements NullEventsDAO {
 		
 		SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
         dataSource.setDriver(new com.mysql.jdbc.Driver());
-        dataSource.setUrl("jdbc:mysql://localhost:3306/swat");
-        dataSource.setUsername("root");
-        dataSource.setPassword("SwatTool@2015");
-        //dataSource.setPassword("Swat@2016");
+        dataSource.setUrl(DBProperties.getDbUrl());
+    	dataSource.setUsername(DBProperties.getDbUsername());
+    	dataSource.setPassword(DBProperties.getDbPassword());
 		
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}

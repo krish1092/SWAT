@@ -8,6 +8,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 
+import com.meteorology.swat.util.DBProperties;
+
 public class AnalyticsDAOImpl implements AnalyticsDAO {
 	
 	private JdbcTemplate jdbcTemplate;	
@@ -143,10 +145,9 @@ public class AnalyticsDAOImpl implements AnalyticsDAO {
         try{
         	SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
         	dataSource.setDriver(new com.mysql.jdbc.Driver());
-        	dataSource.setUrl("jdbc:mysql://localhost:3306/swat");
-        	dataSource.setUsername("root");
-        	dataSource.setPassword("SwatTool@2015");
-        	//dataSource.setPassword("Swat@2016");
+        	dataSource.setUrl(DBProperties.getDbUrl());
+        	dataSource.setUsername(DBProperties.getDbUsername());
+        	dataSource.setPassword(DBProperties.getDbPassword());
         	this.jdbcTemplate = new JdbcTemplate(dataSource);
         	
         }catch(SQLException e){

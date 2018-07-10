@@ -69,10 +69,9 @@ public class CSVFileHandler {
 	private DataSource getDataSourceDetails() throws SQLException{
 		SimpleDriverDataSource ds=new SimpleDriverDataSource();
 		ds.setDriver(new com.mysql.jdbc.Driver());
-		ds.setUrl("jdbc:mysql://localhost:3306/swat");
-		ds.setUsername("root");
-		//ds.setPassword("Swat@2016");
-		ds.setPassword("SwatTool@2015");
+		ds.setUrl(DBProperties.getDbUrl());
+		ds.setUsername(DBProperties.getDbUsername());
+		ds.setPassword(DBProperties.getDbPassword());
 		return ds;
 	};
 	

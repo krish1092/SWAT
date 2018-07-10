@@ -199,10 +199,9 @@ public class Utilities {
 	{
 		SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
         dataSource.setDriver(new com.mysql.jdbc.Driver());
-        dataSource.setUrl("jdbc:mysql://localhost:3306/swat");
-        dataSource.setUsername("root");
-        //dataSource.setPassword("Swat@2016");
-        dataSource.setPassword("SwatTool@2015");
+        dataSource.setUrl(DBProperties.getDbUrl());
+        dataSource.setUsername(DBProperties.getDbUsername());
+        dataSource.setPassword(DBProperties.getDbPassword());
         return dataSource;
 	}
 	
